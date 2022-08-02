@@ -1,6 +1,6 @@
 # Studia-Picture-Binner-CSharp-Desktop-App
 
-Projekt wykonywany na studiach.
+Projekt wykonywany na studiach (w 2019), opis działania niżej.
 
 
 --------------

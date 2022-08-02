@@ -2,6 +2,11 @@
 
 Projekt wykonywany na studiach (w 2019), opis działania niżej.
 
+Interfejs:
+
+![Wybór ścieżek](https://github.com/Sinity/Studia-Picture-Binner-CSharp-Desktop-App/blob/master/interface_screenshoot.png?raw=true)
+
+![Sortowanie zdjęć z/do wcześniej określonych ścieżek](https://github.com/Sinity/Studia-Picture-Binner-CSharp-Desktop-App/blob/master/interface_screenshoot_2.png?raw=true)
 
 --------------
 

@@ -1,0 +1,107 @@
+﻿<Window x:Class="Binner.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Binner"
+        mc:Ignorable="d"
+        Title="Sorter obrazów" Height="450" Width="800" MinWidth="600" MinHeight="200" FontSize="16" KeyUp="MainWindow_KeyUp">
+    <TabControl Margin="10" Name="WindowTabs">
+        <TabItem Visibility="Collapsed">
+            <DockPanel>
+                <TextBlock Margin="0,0,0,10" DockPanel.Dock="Top" FontWeight="SemiBold">Wybierz lokalizacje źródłowe i docelowe obrazów:</TextBlock>
+                <Button Margin="5" Padding="10,5,10,5" DockPanel.Dock="Bottom" HorizontalAlignment="Right" Click="LoadButton_Click" ToolTip="Przejdź do sortowania obrazów">Załaduj</Button>
+
+                <ScrollViewer>
+                    <ItemsControl ItemsSource="{Binding ImageLocations}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Margin="5">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" MinWidth="100" />
+                                        <ColumnDefinition Width="3*" MinWidth="300" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <DockPanel Margin="0,0,8,0">
+                                        <TextBlock VerticalAlignment="Center" Text="Nazwa" />
+                                        <TextBox Margin="4,0,0,0" Text="{Binding Name}" TextChanged="ImageLocation_TextChanged" LostFocus="ImageLocation_LostFocus" />
+                                    </DockPanel>
+
+                                    <Grid Margin="0,0,8,0" Grid.Column="1">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <TextBlock VerticalAlignment="Center" Text="Ścieżka" />
+                                        <TextBox Grid.Column="1" Margin="4,0,0,0" Text="{Binding Path}" TextChanged="ImageLocation_TextChanged" LostFocus="ImageLocation_LostFocus" />
+                                        <Button Width="24" Height="24" Grid.Column="2" Margin="2,0" Click="ChoosePathButton_Click" ToolTip="Wybierz folder">
+                                            <Image Source="/Images/folder.png" />
+                                        </Button>
+                                    </Grid>
+
+                                    <DockPanel Margin="0,0,8,0" Grid.Column="2" ToolTip="Zaznaczenie powoduje dodanie obrazów z tej ścieżki do listy obrazów do sortowania.">
+                                        <TextBlock VerticalAlignment="Center" Text="Źródło?" />
+                                        <CheckBox VerticalAlignment="Center" IsChecked="{Binding IsSource}">
+                                            <CheckBox.LayoutTransform>
+                                                <ScaleTransform ScaleX="1.5" ScaleY="1.5" />
+                                            </CheckBox.LayoutTransform>
+                                        </CheckBox>
+                                    </DockPanel>
+
+                                    <Button Width="24" Height="24" Grid.Column="3" Click="RemoveLocationButton_Click" ToolTip="Usuń wiersz">
+                                        <Image Source="/Images/remove.png" />
+                                    </Button>
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+            </DockPanel>
+        </TabItem>
+
+        <TabItem Visibility="Collapsed">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <ItemsControl Grid.Row="0" ItemsSource="{Binding ImageLocations}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel Margin="5" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Button Content="{Binding Name}" ToolTip="{Binding Path}" Padding="3" Margin="5" Click="TargetButton_Click" />
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                
+                <TextBlock Name="txtCurrentImgPath" Grid.Row="1" HorizontalAlignment="Center" TextWrapping="Wrap">
+                    <TextBlock.Text>
+                        <MultiBinding StringFormat="{}{0}/{1} - {2}">
+                            <Binding Path="Images.CurrentPosition"/>
+                            <Binding Path="Images.Count"/>
+                            <Binding Path="Images.Current.Path"/>
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
+                <Image Name="imContent" Grid.Row="2" Source="{Binding Images.Current.Bitmap}"/>
+                <WrapPanel Margin="5" Grid.Row="3" HorizontalAlignment="Left" >
+                    <Button Margin="10,0,10,0" Padding="5"  Click="ConfigButton_Click" ToolTip="Przejdź spowrotem na stronę konfiguracji.">Powrót</Button>
+                </WrapPanel>
+                
+                <Button Margin="5" Grid.Row="3" HorizontalAlignment="Left" Width="75" Click="ConfigButton_Click" ToolTip="Przejdź spowrotem na stronę konfiguracji.">Powrót</Button>
+            </Grid>
+        </TabItem>
+    </TabControl>
+</Window>
